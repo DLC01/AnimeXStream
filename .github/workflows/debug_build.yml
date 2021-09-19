@@ -1,0 +1,55 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@v2
+    - name: Build
+      run: |
+       chmod +x gradlew
+       ./gradlew assembleDebug
+    - name: Store generated universal APK file
+      uses: actions/upload-artifact@v2
+      with:
+        name: AnimeXStream-universal
+        path: |
+            ./app/build/outputs/apk/debug/AnimexStream-v3.0.6-universal-debug.apk
+            ./app/build/outputs/apk/debug/output.json
+    - name: Store generated arm64-v8a APK file
+      uses: actions/upload-artifact@v2
+      with:
+        name: AnimeXStream-arm64-v8a
+        path: |
+          ./app/build/outputs/apk/debug/AnimexStream-v3.0.6-arm64-v8a-debug.apk
+          ./app/build/outputs/apk/debug/output.json
+    - name: Store generated armeabi-v7a APK file
+      uses: actions/upload-artifact@v2
+      with:
+        name: AnimeXStream-armeabi-v7a
+        path: |
+          ./app/build/outputs/apk/debug/AnimexStream-v3.0.6-armeabi-v7a-debug.apk
+          ./app/build/outputs/apk/debug/output.json
+    - name: Store generated x86_64 APK file
+      uses: actions/upload-artifact@v2
+      with:
+        name: AnimeXStream-x86_64
+        path: |
+          ./app/build/outputs/apk/debug/AnimexStream-v3.0.6-x86_64-debug.apk
+          ./app/build/outputs/apk/debug/output.json
+    - name: Store generated x86 APK file
+      uses: actions/upload-artifact@v2
+      with:
+        name: AnimeXStream-x86
+        path: |
+          ./app/build/outputs/apk/debug/AnimexStream-v3.0.6-x86-debug.apk
+          ./app/build/outputs/apk/debug/output.json
